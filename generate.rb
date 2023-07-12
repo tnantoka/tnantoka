@@ -23,14 +23,14 @@ def get_top_repos(username, count)
   sorted_repos = all_repos.sort_by { |repo| -repo['stargazers_count'] }
   top_repos = sorted_repos.take(count)
 
-  top_repos.map { |repo| [repo['name'], repo['stargazers_count']] }
+  top_repos
 end
 
 def generate_markdown_table(data)
-  table = "| Repository | Stars |\n| --- | --- |\n"
+  table = "| | Repo | Language | Description | Stars |\n| --- | --- | --- | --- | --- |\n"
 
-  data.each do |repo|
-    table << "| [#{repo[0]}](https://github.com/tnantoka/#{repo[0]}) | :star: #{repo[1]} |\n"
+  data.each_with_index do |repo, i|
+    table << "| #{i+1} | [#{repo['name']}](https://github.com/tnantoka/#{repo['name']}) | #{repo['language'] || '-'} | #{repo['description']} | :star: #{repo['stargazers_count']} |\n"
   end
 
   table
@@ -44,7 +44,7 @@ top_repos = get_top_repos(username, top_count)
 markdown_table = generate_markdown_table(top_repos)
 
 template = File.read('README.md.template')
-template += "Last Updated: #{Date.today}\n\n"
+template += "*Last Updated: #{Date.today}*\n\n"
 template += markdown_table
 
 puts template
