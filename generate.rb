@@ -27,10 +27,10 @@ def get_top_repos(username, count)
 end
 
 def generate_markdown_table(data)
-  table = "| | Repo | Language | Description | Stars |\n| --- | --- | --- | --- | --- |\n"
+  table = "| | Repository | Description | Stars |\n| --- | --- | --- | --- |\n"
 
   data.each_with_index do |repo, i|
-    table << "| #{i+1} | [#{repo['name']}](https://github.com/tnantoka/#{repo['name']}) | #{repo['language'] || '-'} | #{repo['description']} | :star: #{repo['stargazers_count']} |\n"
+    table << "| #{i+1} | [#{repo['name']}](https://github.com/tnantoka/#{repo['name']}) | #{repo['description']} | :star: #{repo['stargazers_count']} |\n"
   end
 
   table
